@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Contact Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="content-box">
+    <h1><u>Contact Book</u></h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class="message">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+      <div class="forms">
+        <form method="POST" action="/">
+            <input name="search" value="{{ search or '' }}" placeholder="Search by name or phone" type="text">
+            <button type="submit">Search</button>
+            <a href="{{ url_for('index') }}">Show All</a>
+        </form>
+
+        <form method="POST" action="{{ url_for('add') }}">
+            <input name="name" placeholder="Name" required type="text">
+            <input name="phone" placeholder="Phone Number" required type="tel">
+            <input name="email" placeholder="Email" type="email">
+            <input name="address" placeholder="Address" type="text">
+            <button type="submit">Add Contact</button>
+        </form>
+      </div>
+
+      <div>
+        <table>
+          <thead>
+              <tr><th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+              {% for contact in contacts %}
+              <tr>
+                  <td>{{ contact.name }}</td>
+                  <td>{{ contact.phone }}</td>
+                  <td>{{ contact.email }}</td>
+                  <td>{{ contact.address }}</td>
+                  <td>
+                      <a href="{{ url_for('edit', index=loop.index0) }}">Edit</a> |
+                      <a href="{{ url_for('delete', index=loop.index0) }}" onclick="return confirm('Delete this contact?')">Delete</a>
+                  </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="5">No contacts available.</td></tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+</body>
+</html>

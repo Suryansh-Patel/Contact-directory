@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Edit Contact</h2>
+    <form method="POST">
+        <input name="name" value="{{ contact.name }}" required type="text">
+        <input name="phone" value="{{ contact.phone }}" required type="tel">
+        <input name="email" value="{{ contact.email }}" type="email">
+        <input name="address" value="{{ contact.address }}" type="text">
+        <button type="submit">Save Changes</button>
+        <a href="{{ url_for('index') }}">Cancel</a>
+    </form>
+</body>
+</html>
